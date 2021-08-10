@@ -91,10 +91,11 @@ const
 		$('.close').off('click')
 		$('.close').on('click', e=>{
 	
-			let parent = e.target.parentNode
-			while(!parent.classList.contains('element')) { 
-				parent = parent.parentNode 
-			}
+			let parent = $(this).parent().closest('.selectable'); 
+			// let parent = e.target.parentNode
+			// while(!parent.classList.contains('element')) { 
+			// 	parent = parent.parentNode 
+			// }
 	
 			const id = parent.id
 			delElement(template.enfants, id)
@@ -216,6 +217,9 @@ for (i in templates) {
 }
 
 $('#elements').click(e=>{
+	if (!e.target.classList.contains('icon'))
+		e.target = e.target.closest('.icon'); 
+
 	let currentItem = new items(templates[e.target.querySelector('h3').innerText])
 	addElement(currentItem)
 })
