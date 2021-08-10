@@ -90,15 +90,7 @@ const
 
 		$('.close').off('click')
 		$('.close').on('click', e=>{
-	
-			let parent = $(this).parent().closest('.selectable'); 
-			// let parent = e.target.parentNode
-			// while(!parent.classList.contains('element')) { 
-			// 	parent = parent.parentNode 
-			// }
-	
-			const id = parent.id
-			delElement(template.enfants, id)
+			delElement(template.enfants, e.target.closest('.element').id)
 		})
 
 		if (classActive)
