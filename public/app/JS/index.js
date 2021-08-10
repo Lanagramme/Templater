@@ -3,26 +3,26 @@ const
 		p : {
 			flavor: "Paragraph",
 			type: "p",
-			className: "",
+			className: "element",
 			innerText: ""
 		},
 		img : {
 			flavor: "Image",
 			type: "img",
-			className: "",
+			className: "element",
 			src: "",
 			alt: ''
 		},
 		div : {
 			flavor: "Section",
 			type: "div",
-			className: "",
+			className: "element",
 			enfants: [],
 		},
-		h: {
+		h1: {
 			flavor: "Titre",
 			type : "h1",
-			className: "",
+			className: "element",
 			innerHTML: ""
 		}
 	},
@@ -98,7 +98,6 @@ const
 	
 			const id = parent.id
 			delElement(template.enfants, id)
-			
 		})
 
 		if (classActive)
@@ -140,13 +139,42 @@ const
 		// function creatrice de class
 		// pour chaque attribut de la facet créer un attribut du même nom dans l'objet et un setteur veiriant le type de la donnée
 		
+	},
+	addElement = (currentItem) => {
+		let htmlElement = document.createElement(currentItem.type)
+
+		htmlElement.className = "element"
+		htmlElement.id = currentItem.id = Date.now()
+
+		let close = { ...cross }
+
+		currentItem.enfants.push(close)
+
+		elements.push(currentItem)
+
+		if (!$('.active').length) {
+			template.enfants.push(currentItem)
+		}else { 
+			item = elements.find(x => x.id == $('.active')[0].id)
+			if (item.type == "div")
+				item.enfants.push(currentItem)
+		}
+
+		$('.vue').off('click')
+		$('.vue').on('click', function( event ) {
+			$('.active').removeClass('active')
+			classActive = false
+			$('#info').html('')
+			event.stopPropagation();
+		})
+		rerender()
 	}
 
 class items {
-	constructor(type, classe){
+	constructor(element){
 		this.id
-		this.type = type
-		this.className = classe
+		this.type = element.type
+		this.className = element.className
 		this.enfants = []
 	}
 }
@@ -165,35 +193,8 @@ class h {
 var classActive = ""
 
 $("#add").click(e=>{
-	
-	let currentItem = new items('div', 'element')
-	
-	let htmlElement = document.createElement("div")
-	htmlElement.className = "element"
-	htmlElement.id = currentItem.id = Date.now()
-
-	let close = { ...cross }
-
-	currentItem.enfants.push(close)
-
-	elements.push(currentItem)
-
-	if (!$('.active').length) {
-		template.enfants.push(currentItem)
-	}else { 
-		item = elements.find(x => x.id == $('.active')[0].id)
-		item.enfants.push(currentItem)
-	}
-
-	$('.vue').off('click')
-	$('.vue').on('click', function( event ) {
-		$('.active').removeClass('active')
-		classActive = false
-		$('#info').html('')
-		event.stopPropagation();
-	})
-	rerender()
-
+	let currentItem = new items(templates.div)
+	addElement(currentItem)
 })
 
 $('#update').click(e => {
@@ -213,3 +214,8 @@ for (i in templates) {
 	icon.querySelector('p').innerHTML = templates[i].flavor
 	$('#elements').append(icon)
 }
+
+$('#elements').click(e=>{
+	let currentItem = new items(templates[e.target.querySelector('h3').innerText])
+	addElement(currentItem)
+})
