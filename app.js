@@ -7,16 +7,8 @@ app.get('/', (req,res) => {
 	res.sendFile(path.join(__dirname, './public/index.html'))
 })
 
-app.get('/css', (req,res) => {
-	res.sendFile(path.join(__dirname, './public/app/scss/styles.css'))
-})
-
-app.get('/js', (req,res) => {
-	res.sendFile(path.join(__dirname, './public/app/JS/index.js'))
-})
-
-app.get('/jquery', (req,res) => {
-	res.sendFile(path.join(__dirname, './public/app/JS/jquery-3.6.0.js'))
+app.get('/app/:type/:file', (req,res) => {
+	res.sendFile(path.join(__dirname, 'public'+req.url))
 })
 
 app.listen(port, ()=>{
