@@ -1,0 +1,65 @@
+@import "globals";
+@import "utils/utils";
+
+main{
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  position: relative;
+
+  &>*{
+    border: 1px solid black;
+    height: 100vh;
+    padding: 15px;
+  }
+
+  .panel {
+  }
+
+  .vue{
+    .element{
+      border: 1px solid black;
+      padding: 15px;
+      position: relative;
+
+      .close{
+        position: absolute;
+        top: 5px; right: 5px;
+        display: none;
+      }
+
+      &.active{
+        border: 1px solid hotpink;
+        &>.close{display: block;}
+      }
+    }
+  }
+}
+
+.gre{
+  border-color: green !important;
+}
+
+.border{
+  border: 1px solid;
+  margin: 3px;
+}
+
+.centered{
+  display: grid;
+  place-items: center;
+}
+
+.icon{
+  padding: 5px;
+  height: 50px;
+  min-width: 50px;
+  width: max-content;
+  *{
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.d-flex{
+  display: flex;
+}

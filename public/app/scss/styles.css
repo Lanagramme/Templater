@@ -1,0 +1,97 @@
+html {
+  font-size: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  height: 100vh;
+}
+
+.colones {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.colones * {
+  width: 100%;
+}
+
+main {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 300px 1fr;
+      grid-template-columns: 300px 1fr;
+  position: relative;
+}
+
+main > * {
+  border: 1px solid black;
+  height: 100vh;
+  padding: 15px;
+}
+
+main .vue .element {
+  border: 1px solid black;
+  padding: 15px;
+  position: relative;
+}
+
+main .vue .element .close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: none;
+}
+
+main .vue .element.active {
+  border: 1px solid hotpink;
+}
+
+main .vue .element.active > .close {
+  display: block;
+}
+
+.gre {
+  border-color: green !important;
+}
+
+.border {
+  border: 1px solid;
+  margin: 3px;
+}
+
+.centered {
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+}
+
+.icon {
+  padding: 5px;
+  height: 50px;
+  min-width: 50px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.icon * {
+  margin: 0;
+  padding: 0;
+}
+
+.d-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/*# sourceMappingURL=styles.css.map */

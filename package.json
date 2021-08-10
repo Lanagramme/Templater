@@ -1,0 +1,25 @@
+{
+  "name": "templater",
+  "version": "1.0.0",
+  "description": "A simple html template creater",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon run app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://Lanagramme:Decatrigramme16@github.com/lanagramme/templater.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lanagramme/templater/issues"
+  },
+  "homepage": "https://github.com/lanagramme/templater#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.12"
+  }
+}

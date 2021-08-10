@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HtmlTemplater</title>
+	<link rel="stylesheet" href="./app/scss/styles.css">
+	<link rel="stylesheet" href="/css">
+</head>
+<body>
+	<main>
+		<div class="panel">
+			<button id="add">Ajouter</button>
+			<hr> <br> 
+			<form id="info">
+				
+			</form>
+			<button id='update'>Update</button>
+			<hr> <br> 
+			<div id="elements" class="d-flex"></div>
+		</div>
+		<div class="vue">
+		</div>
+	</main>
+
+	<template id="close">
+		<svg width="16" height="16" fill="gray" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+			<path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+		</svg>
+	</template>
+	<template id="form-element">
+		<label for=""></label>
+		<input type="text" name="" id="">
+		<br><br>
+	</template>
+	<template id="case-template">
+		<div class="icon border centered">
+			<h3></h3>
+			<p></p>
+		</div>
+	</template>
+
+	<script src="./app/JS/jquery-3.6.0.js"></script>
+	<script src="/jquery"></script>
+	<script src="./app/JS/index.js"></script>
+	<script src="/js"></script>
+</body>
+</html>
