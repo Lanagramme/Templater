@@ -49,11 +49,15 @@ main{
   place-items: center;
 }
 
+#elements{
+  flex-wrap: wrap;
+}
+
 .icon{
   padding: 5px;
   height: 50px;
-  min-width: 50px;
-  width: max-content;
+  min-width: max-content;
+  width: 83px;
   *{
     margin: 0;
     padding: 0;
@@ -62,4 +66,8 @@ main{
 
 .d-flex{
   display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
 }

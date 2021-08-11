@@ -30,15 +30,23 @@ const
 		type:'div',
 		enfants:[]
 	},
-	cross = {
-		type : "svg",
-		className : "close",
-		enfants : [
-			{
-				type : "path",
-				d :"M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"
-			}
-		]
+	svgs = {
+		p : {
+			type: 'i',
+			className: 'bi bi-paragraph'
+		},
+		h1 : {
+			type: 'i',
+			className: 'bi bi-type-h1'
+		},
+		div : {
+			type: 'i',
+			className: 'bi bi-bounding-box-circles'
+		},
+		img : {
+			type: 'i',
+			className: 'bi bi-card-image'
+		},
 	},
 	elements = [],
 	cl = console.log,
@@ -60,12 +68,6 @@ const
 
 		$('.vue').html('')
 		render(template, document.querySelector('.vue'))
-
-		$('.element').each(x => {
-			let close = get_template('#close')
-			close.querySelector('svg').classList.add('close')
-			$('.element')[x].appendChild(close)
-		})
 	
 		$('.element').off('click')
 		$('.element').on('click', e=>{
@@ -88,13 +90,9 @@ const
 			e.stopPropagation()
 		})
 
-		$('.close').off('click')
-		$('.close').on('click', e=>{
-			delElement(template.enfants, e.target.closest('.element').id)
-		})
-
 		if (classActive)
 			$('#'+classActive).addClass('active')
+
 	},
 	delElement = (liste, wanted) => {
 		const 
@@ -138,10 +136,6 @@ const
 
 		htmlElement.className = "element"
 		htmlElement.id = currentItem.id = Date.now()
-
-		let close = { ...cross }
-
-		currentItem.enfants.push(close)
 
 		elements.push(currentItem)
 
@@ -196,22 +190,50 @@ $('#update').click(e => {
 		if ($('input')[x].name == 'enfants' || $('input')[x].name == 'id') return
 		element[$('input')[x].name] = $('input')[x].value	
 	})
-	cl(element)
 	rerender()
 })
 
+$('#delete').click(e => {
+	delElement(template.enfants, $('input[name=id]').val())
+	rerender()
+	$('#info').html('')
+
+})
+
 for (i in templates) {
-	icon = get_template('#case-template')
-	icon.id = i
-	icon.querySelector('h3').innerHTML = templates[i].type
-	icon.querySelector('p').innerHTML = templates[i].flavor
-	$('#elements').append(icon)
+	// icon = get_template('#case-template')
+	// icon.id = i
+	// icon.querySelector('h3').innerHTML = templates[i].type
+	// icon.querySelector('p').innerHTML = templates[i].flavor
+	// $('#elements').append(icon)
+
+	let element = {
+		type: "div",
+		id: templates[i].type,
+		className: "icon border centered",
+		enfants: []
+	}
+
+	svg = {... svgs[templates[i].type]}
+
+	// element.enfants.push({... svgs[templates[i].type]})
+	// element.enfants.push({... cross})
+	element.enfants.push(svg)
+	element.enfants.push({
+		type: 'p',
+		innerHTML: templates[i].flavor
+	})
+
+	cl({... svgs[templates[i].type]})
+
+	render(element, document.querySelector('#elements'))
+
 }
 
 $('#elements').click(e=>{
 	if (!e.target.classList.contains('icon'))
 		e.target = e.target.closest('.icon'); 
 
-	let currentItem = new items(templates[e.target.querySelector('h3').innerText])
+	let currentItem = new items(templates[e.target.id])
 	addElement(currentItem)
 })

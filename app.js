@@ -8,7 +8,7 @@ app.get('/', (req,res) => {
 })
 
 app.get('/app/:type/:file', (req,res) => {
-	res.sendFile(path.join(__dirname, 'public'+req.url))
+	res.sendFile(path.join(__dirname, './public'+req.url))
 })
 
 app.listen(port, ()=>{

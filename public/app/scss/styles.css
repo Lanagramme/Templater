@@ -75,13 +75,18 @@ main .vue .element.active > .close {
   place-items: center;
 }
 
+#elements {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
 .icon {
   padding: 5px;
   height: 50px;
-  min-width: 50px;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+  width: 83px;
 }
 
 .icon * {
@@ -93,5 +98,11 @@ main .vue .element.active > .close {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.justify-between {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 /*# sourceMappingURL=styles.css.map */
