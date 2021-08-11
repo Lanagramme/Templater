@@ -12,35 +12,32 @@
 
 </head>
 <body>
-	<header>
-	
+	<header class="px-3 py-2 text-white bg-dark d-flex justify-content-between">
+		<p class="my-auto">Title</p>	
+		<div class='d-flex'>
+			<input class="my-auto mx-2" type="checkbox" name="preview" id="preview">
+			<label class="m-auto" for="preview">Preview</label>
+		</div>
 	</header>
 	<main>
 		<div class="panel">
-			<hr> <br> 
 			<form id="info">
 				
 			</form>
-			<div class="d-flex justify-between">
-				<button id='delete'>Delete</button>
-				<button id='update'>Update</button>
+			<div class="d-flex my-1 justify-between">
+				<button class="btn m-1 btn-danger" id='delete'>Delete</button>
+				<button class="btn m-1 btn-success" id='update'>Update</button>
 			</div>
-			<hr> <br> 
+			<hr> 
 			<div id="elements" class="d-flex"></div>
 		</div>
 		<div class="vue">
 		</div>
 	</main>
 
-	<template id="close">
-		<svg width="16" height="16" fill="gray" class="bi bi-x-square-fill" viewBox="0 0 16 16">
-			<path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
-		</svg>
-	</template>
 	<template id="form-element">
-		<label for=""></label>
-		<input type="text" name="" id="">
-		<br><br>
+		<label class="form-label" for=""></label>
+		<input type="text" class="form-control mb-1" name="" id="">
 	</template>
 	<template id="case-template">
 		<div class="icon border centered">

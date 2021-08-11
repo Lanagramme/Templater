@@ -1,12 +1,10 @@
 html {
   font-size: 100%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 *, *::before, *::after {
-  -webkit-box-sizing: inherit;
-          box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body {
@@ -16,93 +14,65 @@ body {
 }
 
 .colones {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
-
 .colones * {
   width: 100%;
 }
 
 main {
-  display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 300px 1fr;
-      grid-template-columns: 300px 1fr;
+  grid-template-columns: 300px 1fr;
   position: relative;
 }
-
 main > * {
   border: 1px solid black;
   height: 100vh;
   padding: 15px;
 }
-
-main .vue .element {
+main .vue:not(.preview) p.element {
+  padding: 3px;
+  min-height: 20px;
+}
+main .vue:not(.preview) .element {
   border: 1px solid black;
-  padding: 15px;
   position: relative;
 }
-
-main .vue .element .close {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  display: none;
+main .vue:not(.preview) .element:not(p) {
+  padding: 15px;
 }
-
-main .vue .element.active {
+main .vue:not(.preview) .element.active {
   border: 1px solid hotpink;
 }
-
-main .vue .element.active > .close {
+main .vue:not(.preview) .element.active > .close {
   display: block;
 }
 
-.gre {
-  border-color: green !important;
-}
-
-.border {
-  border: 1px solid;
-  margin: 3px;
-}
-
 .centered {
-  display: -ms-grid;
   display: grid;
   place-items: center;
 }
 
 #elements {
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .icon {
   padding: 5px;
-  height: 50px;
-  min-width: -webkit-max-content;
-  min-width: -moz-max-content;
   min-width: max-content;
-  width: 83px;
+  width: 95px;
 }
-
 .icon * {
   margin: 0;
   padding: 0;
 }
 
-.d-flex {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+.justify-between {
+  justify-content: space-between;
 }
 
-.justify-between {
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+.form-label {
+  margin: 0 !important;
 }
+
 /*# sourceMappingURL=styles.css.map */

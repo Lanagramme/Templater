@@ -77,7 +77,6 @@ const
 			form.innerHTML = ""
 			cl(element)
 			for (i in element) {
-				cl(i)
 				let champ = get_template('#form-element')
 				label = champ.querySelector('label')
 				input = champ.querySelector('input')
@@ -191,7 +190,7 @@ for (i in templates) {
 	let element = {
 		type: "div",
 		id: templates[i].type,
-		className: "icon border centered",
+		className: "icon border centered m-2",
 		enfants: []
 	}
 
@@ -215,3 +214,12 @@ $('.icon').click(e=>{
 	delete currentItem.flavor
 	addElement(currentItem)
 })
+
+
+$('#preview').click(e=>{
+	if ( $('.preview').length )
+		$(".preview").removeClass('preview')
+	else $('.vue').addClass('preview')
+})
+
+document.querySelector('#preview').checked = false
