@@ -1,8 +1,14 @@
 const
 	templates= {
 		p : {
-			flavor: "Paragraph",
+			flavor: "Paragraphe",
 			type: "p",
+			className: "element",
+			innerText: ""
+		},
+		h1 : {
+			flavor: "Titre",
+			type: "h1",
 			className: "element",
 			innerText: ""
 		},
@@ -17,13 +23,6 @@ const
 			flavor: "Section",
 			type: "div",
 			className: "element",
-			enfants: [],
-		},
-		h1: {
-			flavor: "Titre",
-			type : "h1",
-			className: "element",
-			innerHTML: ""
 		}
 	},
 	template = {
@@ -76,12 +75,14 @@ const
 			element = elements.find(x => x.id == classActive)
 			let form = document.querySelector("form")
 			form.innerHTML = ""
+			cl(element)
 			for (i in element) {
+				cl(i)
 				let champ = get_template('#form-element')
 				label = champ.querySelector('label')
 				input = champ.querySelector('input')
 				label.for =  label.innerHTML =  input.id = input.name = i
-				input.value = i == "enfants" ? element[i].length-1 : element[i]
+				input.value = i == "enfants" ? element[i].length : element[i]
 				form.prepend(champ)
 			}
 	
@@ -101,9 +102,11 @@ const
 				if (element_index == -1) return
 				let element = elements[element_index]
 
-				if (element.enfants.length) element.enfants.forEach( x => {
-					suppression_recursive_from_elements_list(x.id)
-				})
+				if (elements.type == "div") {
+					if (element.enfants.length) element.enfants.forEach( x => {
+						suppression_recursive_from_elements_list(x.id)
+					})
+				}
 
 				elements.splice(element_index, 1); 
 			},
@@ -117,7 +120,7 @@ const
 				for (let i = 0; i < liste.length; i++){
 					let element = liste[i]
 					if (!element.id) continue
-					enfants = suppression_from_template(element.enfants, id)
+					suppression_from_template(element.enfants, id)
 				}
 			}
 
@@ -162,27 +165,11 @@ class items {
 		this.id
 		this.type = element.type
 		this.className = element.className
-		this.enfants = []
-	}
-}
-class h {
-	constructor(){
-		this.flavor = "Titre"
-		this.type  = "h1"
-		this.className = ""
-		this.innerHTML = ""
-	}
-	set priority(num) {
-		this.type = `h${num}`
+		// this.enfants = []
 	}
 }
 
 var classActive = ""
-
-$("#add").click(e=>{
-	let currentItem = new items(templates.div)
-	addElement(currentItem)
-})
 
 $('#update').click(e => {
 	element = elements.find(x=>x.id==$('input[name=id]').val())
@@ -201,12 +188,6 @@ $('#delete').click(e => {
 })
 
 for (i in templates) {
-	// icon = get_template('#case-template')
-	// icon.id = i
-	// icon.querySelector('h3').innerHTML = templates[i].type
-	// icon.querySelector('p').innerHTML = templates[i].flavor
-	// $('#elements').append(icon)
-
 	let element = {
 		type: "div",
 		id: templates[i].type,
@@ -215,25 +196,22 @@ for (i in templates) {
 	}
 
 	svg = {... svgs[templates[i].type]}
-
-	// element.enfants.push({... svgs[templates[i].type]})
-	// element.enfants.push({... cross})
 	element.enfants.push(svg)
 	element.enfants.push({
 		type: 'p',
 		innerHTML: templates[i].flavor
 	})
 
-	cl({... svgs[templates[i].type]})
-
 	render(element, document.querySelector('#elements'))
-
 }
 
-$('#elements').click(e=>{
+$('.icon').click(e=>{
 	if (!e.target.classList.contains('icon'))
 		e.target = e.target.closest('.icon'); 
 
-	let currentItem = new items(templates[e.target.id])
+	// let currentItem = new items(templates[e.target.id])
+	let currentItem = {...templates[e.target.id]}
+	if (e.target.id == ("div")) currentItem.enfants = Array(0)
+	delete currentItem.flavor
 	addElement(currentItem)
 })
