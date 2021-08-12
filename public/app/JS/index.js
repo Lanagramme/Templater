@@ -1,10 +1,9 @@
 const
 	templates= {
-		p : {
-			flavor: "Paragraphe",
-			type: "p",
+		div : {
+			flavor: "Section",
+			type: "div",
 			className: "element",
-			innerText: ""
 		},
 		h1 : {
 			flavor: "Titre",
@@ -12,18 +11,43 @@ const
 			className: "element",
 			innerText: ""
 		},
+		p : {
+			flavor: "Text",
+			type: "p",
+			className: "element",
+			innerText: ""
+		},
+		a : {
+			flavor: "Lien",
+			type: "a",
+			className: "element",
+			href:'#',
+			innerText: ''
+		},
 		img : {
 			flavor: "Image",
 			type: "img",
 			className: "element",
 			src: "",
-			alt: ''
+			alt: '',
+			style: ''
 		},
-		div : {
-			flavor: "Section",
-			type: "div",
+		ul : {
+			flavor: "Liste-ul",
+			type: "ul",
 			className: "element",
-		}
+		},
+		ol : {
+			flavor: "Liste-ol",
+			type: "ol",
+			className: "element",
+		},
+		li : {
+			flavor: "List Item",
+			type: "li",
+			className: "element",
+			innerText: ""
+		},
 	},
 	template = {
 		type:'div',
@@ -46,8 +70,25 @@ const
 			type: 'i',
 			className: 'bi bi-card-image'
 		},
+		li : {
+			type: 'i',
+			className: 'bi bi-list'
+		},
+		ul : {
+			type: 'i',
+			className: 'bi bi-list-ul'
+		},
+		ol : {
+			type: 'i',
+			className: 'bi bi-list-ol'
+		},
+		a : {
+			type: 'i',
+			className: 'bi bi-link'
+		},
 	},
 	elements = [],
+	enfantables = [ 'div', 'ul', 'li', 'ol', 'a' ],
 	cl = console.log,
 	get_template = (selecteur) => {
 		return document.importNode(document.querySelector(selecteur).content, true);
@@ -75,7 +116,6 @@ const
 			element = elements.find(x => x.id == classActive)
 			let form = document.querySelector("form")
 			form.innerHTML = ""
-			cl(element)
 			for (i in element) {
 				let champ = get_template('#form-element')
 				label = champ.querySelector('label')
@@ -101,8 +141,8 @@ const
 				if (element_index == -1) return
 				let element = elements[element_index]
 
-				if (elements.type == "div") {
-					if (element.enfants.length) element.enfants.forEach( x => {
+				if ( enfantables.includes( elements.type ) ) {
+					if ( element.enfants.length ) element.enfants.forEach( x => {
 						suppression_recursive_from_elements_list(x.id)
 					})
 				}
@@ -145,8 +185,7 @@ const
 			template.enfants.push(currentItem)
 		}else { 
 			item = elements.find(x => x.id == $('.active')[0].id)
-			if (item.type == "div")
-				item.enfants.push(currentItem)
+			if ( enfantables.includes( item.type ) ) item.enfants.push(currentItem)
 		}
 
 		$('.vue').off('click')
@@ -190,7 +229,7 @@ for (i in templates) {
 	let element = {
 		type: "div",
 		id: templates[i].type,
-		className: "icon border centered m-2",
+		className: "icon border centered m-1",
 		enfants: []
 	}
 
@@ -208,9 +247,8 @@ $('.icon').click(e=>{
 	if (!e.target.classList.contains('icon'))
 		e.target = e.target.closest('.icon'); 
 
-	// let currentItem = new items(templates[e.target.id])
 	let currentItem = {...templates[e.target.id]}
-	if (e.target.id == ("div")) currentItem.enfants = Array(0)
+	if (enfantables.includes( e.target.id)) currentItem.enfants = Array(0)
 	delete currentItem.flavor
 	addElement(currentItem)
 })
@@ -223,3 +261,20 @@ $('#preview').click(e=>{
 })
 
 document.querySelector('#preview').checked = false
+
+$('#update').click(e=>{
+	$("#modal-body .obj  textarea").val(JSON.stringify(template))
+	$("#modal-body .html textarea").val(JSON.stringify(document.querySelector('.vue').innerHTML))
+})
+
+$('#import-data').click(e=>{
+	const data = JSON.parse($('#data-to-import').val())
+	template.enfants = data.enfants
+	rerender()
+	$('#close-import').click()
+})
+
+$('#empty').click(e=>{
+	template.enfants.length = 0
+	rerender()
+})

@@ -7,14 +7,16 @@
 	<title>HtmlTemplater</title>
 	<link rel="stylesheet" href="./app/scss/styles.css">
 	<link rel="stylesheet" href="./app/scss/icons.css">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	
 </head>
 <body>
 	<header class="px-3 py-2 text-white bg-dark d-flex justify-content-between">
 		<p class="my-auto">Title</p>	
 		<div class='d-flex'>
+			<button type="button" class="btn btn-secondary mx-2 my-auto px-2 py-1" data-toggle="modal" data-target="#modalimport">Import</button>
+			<button type="button" class="btn btn-primary   mx-2 my-auto px-2 py-1" data-toggle="modal" data-target="#modalCode">Export</button>
 			<input class="my-auto mx-2" type="checkbox" name="preview" id="preview">
 			<label class="m-auto" for="preview">Preview</label>
 		</div>
@@ -25,28 +27,83 @@
 				
 			</form>
 			<div class="d-flex my-1 justify-between">
-				<button class="btn m-1 btn-danger" id='delete'>Delete</button>
-				<button class="btn m-1 btn-success" id='update'>Update</button>
+				<button class="btn m-1 btn-danger px-2 py-1" id='delete'>Delete</button>
+				<button class="btn m-1 btn-success px-2 py-1" id='update'>Update</button>
 			</div>
 			<hr> 
 			<div id="elements" class="d-flex"></div>
+			<hr>
+			<button class="btn btn-warning px-2 py-1" id="empty">Empty</button>
 		</div>
 		<div class="vue">
 		</div>
 	</main>
 
+	<div class="modal fade" id="modalCode" tabindex="-1" aria-labelledby="modalCodeLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalCodeLabel">Export</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="modal-body">
+					<div class="obj">
+						<textarea name="" id="" cols="48" rows="10"></textarea>
+					</div>
+					<hr>
+					<div class="html">
+						<textarea name="" id="" cols="48" rows="10"></textarea>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalimport" tabindex="-1" aria-labelledby="modalimportLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalimportLabel">Import</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="modal-body">
+					<div class="form-group">
+						<label for="data-to-import">Insert code here</label>
+						<textarea class="form-control" id="data-to-import" rows="3"></textarea>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-import">Close</button>
+					<button type="button" class="btn btn-primary" id='import-data'>Import</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<template id="form-element">
 		<label class="form-label" for=""></label>
 		<input type="text" class="form-control mb-1" name="" id="">
 	</template>
+	<template id="form-element">
+		<label class="form-label" for=""></label>
+		<input type="textarea" class="form-control mb-1" name="" id="">
+	</template>
+
 	<template id="case-template">
 		<div class="icon border centered">
 			<h3></h3>
 			<p></p>
 		</div>
 	</template>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	<script src="./app/JS/jquery-3.6.0.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 	<script src="./app/JS/index.js"></script>
 </body>
 </html>

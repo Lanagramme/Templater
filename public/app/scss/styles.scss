@@ -2,7 +2,7 @@
 @import "utils/utils";
 
 main{
-  display: grid;
+  display: grid!important;
   grid-template-columns: 300px 1fr;
   position: relative;
 
@@ -16,8 +16,8 @@ main{
   }
 
   .vue:not(.preview){
-    p.element{
-      padding: 3px;
+    p.element, li.element{
+      padding: 3px!important;
       min-height: 20px;
     }
     .element{
@@ -25,7 +25,7 @@ main{
       position: relative;
       &:not(p){
         padding: 15px;
-     }
+      }
 
       &.active{
         border: 1px solid hotpink;
@@ -47,7 +47,7 @@ main{
 .icon{
   padding: 5px;
   min-width: max-content;
-  width: 95px;
+  width: 80px;
   *{
     margin: 0;
     padding: 0;
@@ -60,4 +60,17 @@ main{
 
 .form-label {
   margin: 0 !important;
+}
+
+
+#modalCode p {
+  overflow-wrap: break-word;
+}
+
+.bi-list-ol::before,.bi-list-ul::before {
+  transform: scale(1.6);
+}
+
+.bi-list::before {
+  transform: scale(1.5);
 }
