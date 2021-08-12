@@ -16,8 +16,8 @@ main{
   }
 
   .vue:not(.preview){
-    p.element, li.element{
-      padding: 3px!important;
+    p.element, li.element, button.element{
+      padding: 3px;
       min-height: 20px;
     }
     .element{

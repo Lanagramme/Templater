@@ -48,6 +48,30 @@ const
 			className: "element",
 			innerText: ""
 		},
+		form: {
+			flavor: "formulaire",
+			type: "form",
+			className: "element",
+		},
+		label: {
+			flavor: "label",
+			type: "label",
+			className: "element",
+			for: ""
+		},
+		input: {
+			flavor: "field",
+			type: "input",
+			className: "element",
+			value: "",
+			name: ""
+		},
+		button: {
+			flavor: "boutton",
+			type: "button",
+			className: "element btn",
+			innerText: ""
+		},
 	},
 	template = {
 		type:'div',
@@ -212,8 +236,14 @@ var classActive = ""
 
 $('#update').click(e => {
 	element = elements.find(x=>x.id==$('input[name=id]').val())
+	if ($('[name="type"]').val().includes(' ')) { 
+		alert("Le type ne peut pas contenir d'espace")
+		return
+	}
+	
 	$('#info input').each(x => {
 		if ($('input')[x].name == 'enfants' || $('input')[x].name == 'id') return
+		if ($('input')[x].name == 'type') return
 		element[$('input')[x].name] = $('input')[x].value	
 	})
 	rerender()
@@ -267,10 +297,8 @@ $('#update').click(e=>{
 	$("#modal-body .obj  textarea").val(JSON.stringify(template, null, 2))
 	document.querySelector("#modal-body .html pre").textContent = decodeURI(document.querySelector('.vue').innerHTML)
 })
-data = ''
 $('#import-data').click(e=>{
 	data = JSON.parse($('#data-to-import').val())
-	cl(data)
 	template.enfants = data.enfants
 		elements.length=0
 	scanTemplate(template.enfants)

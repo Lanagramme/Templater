@@ -30,8 +30,8 @@ main > * {
   height: 100vh;
   padding: 15px;
 }
-main .vue:not(.preview) p.element, main .vue:not(.preview) li.element {
-  padding: 3px !important;
+main .vue:not(.preview) p.element, main .vue:not(.preview) li.element, main .vue:not(.preview) button.element {
+  padding: 3px;
   min-height: 20px;
 }
 main .vue:not(.preview) .element {
