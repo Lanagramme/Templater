@@ -1,12 +1,10 @@
 html {
   font-size: 100%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 *, *::before, *::after {
-  -webkit-box-sizing: inherit;
-          box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body {
@@ -16,79 +14,61 @@ body {
 }
 
 .colones {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
-
 .colones * {
   width: 100%;
 }
 
 main {
-  display: -ms-grid !important;
   display: grid !important;
-  -ms-grid-columns: 300px 1fr;
-      grid-template-columns: 300px 1fr;
+  grid-template-columns: 300px 1fr;
   position: relative;
 }
-
 main > * {
   border: 1px solid black;
   height: 100vh;
   padding: 15px;
 }
-
 main .vue:not(.preview) p.element, main .vue:not(.preview) li.element {
   padding: 3px !important;
   min-height: 20px;
 }
-
 main .vue:not(.preview) .element {
   border: 1px solid black;
   position: relative;
 }
-
 main .vue:not(.preview) .element:not(p) {
   padding: 15px;
 }
-
 main .vue:not(.preview) .element.active {
   border: 1px solid hotpink;
 }
-
 main .vue:not(.preview) .element.active > .close {
   display: block;
 }
 
 .centered {
-  display: -ms-grid;
   display: grid;
   place-items: center;
 }
 
 #elements {
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .icon {
   padding: 5px;
-  min-width: -webkit-max-content;
-  min-width: -moz-max-content;
   min-width: max-content;
   width: 80px;
 }
-
 .icon * {
   margin: 0;
   padding: 0;
 }
 
 .justify-between {
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 
 .form-label {
@@ -100,12 +80,15 @@ main .vue:not(.preview) .element.active > .close {
 }
 
 .bi-list-ol::before, .bi-list-ul::before {
-  -webkit-transform: scale(1.6);
-          transform: scale(1.6);
+  transform: scale(1.6);
 }
 
 .bi-list::before {
-  -webkit-transform: scale(1.5);
-          transform: scale(1.5);
+  transform: scale(1.5);
 }
+
+#modal-body textarea {
+  width: 100%;
+}
+
 /*# sourceMappingURL=styles.css.map */

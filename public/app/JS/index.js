@@ -150,18 +150,19 @@ const
 				elements.splice(element_index, 1); 
 			},
 			suppression_from_template = (liste, id) => {
-		
+				// si l'élément recherché fait partie de la liste, le supprimer et quitter la fonction
+				// sinon appeler la fonction sur tous les enfants des elements de la liste
 				let liste_index = liste.findIndex(x => x.id == id )
 				if (liste_index != -1) {
 					liste.splice(liste_index, 1); 
 					return
 				}
-				for (let i = 0; i < liste.length; i++){
-					let element = liste[i]
-					if (!element.id) continue
-					suppression_from_template(element.enfants, id)
+				for (element of liste) {
+					if (enfantables.includes(element.type)) {
+						if (element.enfants.length) suppression_from_template(element.enfants, id)
+					}
 				}
-			}
+			}	
 
 		suppression_recursive_from_elements_list(wanted)
 		suppression_from_template(liste,wanted)
@@ -263,13 +264,16 @@ $('#preview').click(e=>{
 document.querySelector('#preview').checked = false
 
 $('#update').click(e=>{
-	$("#modal-body .obj  textarea").val(JSON.stringify(template))
-	$("#modal-body .html textarea").val(JSON.stringify(document.querySelector('.vue').innerHTML))
+	$("#modal-body .obj  textarea").val(JSON.stringify(template, null, 2))
+	document.querySelector("#modal-body .html pre").textContent = decodeURI(document.querySelector('.vue').innerHTML)
 })
-
+data = ''
 $('#import-data').click(e=>{
-	const data = JSON.parse($('#data-to-import').val())
+	data = JSON.parse($('#data-to-import').val())
+	cl(data)
 	template.enfants = data.enfants
+		elements.length=0
+	scanTemplate(template.enfants)
 	rerender()
 	$('#close-import').click()
 })
@@ -278,3 +282,17 @@ $('#empty').click(e=>{
 	template.enfants.length = 0
 	rerender()
 })
+
+function scanTemplate(template){
+	if (Array.isArray(template)){
+		for (element of template) {
+			elements.push(element)
+
+			if (enfantables.includes(element.type)){
+				if (element.enfants.length) {
+					scanTemplate(element.enfants)
+				}
+			}
+		}	
+	}
+}
