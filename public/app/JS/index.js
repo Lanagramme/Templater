@@ -1,326 +1,313 @@
-const
-	templates= {
-		div : {
-			flavor: "Section",
-			type: "div",
-			className: "element",
+class items {
+	constructor(type, className, flavor) {
+		this.id = Date.now()
+		this.type = type
+		this.className = className
+		this.flavor = flavor
+		this.style = ""
+	}
+}
+class enfantables extends items {
+	constructor(type, className, flavor) {
+		super(type, className, flavor)
+		this.enfants = []
+	}
+}
+class text extends items {
+	constructor(type, className, flavor) {
+		super(type, className, flavor)
+		this.innerText = ""
+	}
+}
+
+const templates = {
+		div: class extends enfantables {
+			constructor() {
+				super("div", "element", "Section")
+			}
 		},
-		h1 : {
-			flavor: "Titre",
-			type: "h1",
-			className: "element",
-			innerText: ""
+		h1: class extends text {
+			constructor() {
+				super("h1", "element", "titre")
+				this.priorityMax = 5
+				this._priority = 1
+			}
+
+			get priority() {
+				return this._priority
+			}
+
+			set priority(priority) {
+				priority = typeof priority == "string" ? priority.trim() : priority
+				if (
+					+priority == NaN &&
+					priority < this.priorityMax + 1 &&
+					priority > 0
+				) {
+					alert("La priorité doit être un chiffre entre 1 et 6")
+					return
+				}
+				if (priority < this.priorityMax + 1) this.type = "h" + priority
+			}
 		},
-		p : {
-			flavor: "Text",
-			type: "p",
-			className: "element",
-			innerText: ""
+		p: class extends text {
+			constructor() {
+				super("p", "element", "Text")
+			}
 		},
-		a : {
-			flavor: "Lien",
-			type: "a",
-			className: "element",
-			href:'#',
-			innerText: ''
+		a: class extends text {
+			constructor() {
+				super("a", "element", "Lien")
+				this.href = "#"
+				this.enfants = []
+			}
 		},
-		img : {
-			flavor: "Image",
-			type: "img",
-			className: "element",
-			src: "",
-			alt: '',
-			style: ''
+		img: class extends items {
+			constructor() {
+				super("img", "element", "Image")
+				this.src = ""
+				this.alt = ""
+			}
 		},
-		ul : {
-			flavor: "Liste-ul",
-			type: "ul",
-			className: "element",
+		ul: class extends enfantables {
+			constructor() {
+				super("ul", "element", "Liste-ul")
+			}
 		},
-		ol : {
-			flavor: "Liste-ol",
-			type: "ol",
-			className: "element",
+		ol: class extends enfantables {
+			constructor() {
+				super("ol", "element", "Liste-ol")
+			}
 		},
-		li : {
-			flavor: "List Item",
-			type: "li",
-			className: "element",
-			innerText: ""
+		li: class extends text {
+			constructor() {
+				super("li", "element", "Liste Item")
+				this.enfants = []
+			}
 		},
-		form: {
-			flavor: "formulaire",
-			type: "form",
-			className: "element",
+		form: class extends enfantables {
+			constructor() {
+				super("form", "element", "Formulaire")
+			}
 		},
-		label: {
-			flavor: "label",
-			type: "label",
-			className: "element",
-			for: ""
+		label: class extends text {
+			constructor() {
+				super("label", "element", "Label")
+				this.for = ""
+			}
 		},
-		input: {
-			flavor: "field",
-			type: "input",
-			className: "element",
-			value: "",
-			name: ""
+		input: class extends items {
+			constructor() {
+				super("input", "element", "Field")
+				this.value = ""
+				this.name = ""
+			}
 		},
-		button: {
-			flavor: "boutton",
-			type: "button",
-			className: "element btn",
-			innerText: ""
+		button: class extends text {
+			constructor() {
+				super("button", "element btn", "Button")
+			}
 		},
 	},
-	template = {
-		type:'div',
-		enfants:[]
-	},
+	template = { type: "div", enfants: [] },
 	svgs = {
-		p : {
-			type: 'i',
-			className: 'bi bi-paragraph'
-		},
-		h1 : {
-			type: 'i',
-			className: 'bi bi-type-h1'
-		},
-		div : {
-			type: 'i',
-			className: 'bi bi-bounding-box-circles'
-		},
-		img : {
-			type: 'i',
-			className: 'bi bi-card-image'
-		},
-		li : {
-			type: 'i',
-			className: 'bi bi-list'
-		},
-		ul : {
-			type: 'i',
-			className: 'bi bi-list-ul'
-		},
-		ol : {
-			type: 'i',
-			className: 'bi bi-list-ol'
-		},
-		a : {
-			type: 'i',
-			className: 'bi bi-link'
-		},
+		p: { type: "i", className: "bi bi-paragraph" },
+		h1: { type: "i", className: "bi bi-type-h1" },
+		div: { type: "i", className: "bi bi-bounding-box-circles" },
+		img: { type: "i", className: "bi bi-card-image" },
+		li: { type: "i", className: "bi bi-list" },
+		ul: { type: "i", className: "bi bi-list-ul" },
+		ol: { type: "i", className: "bi bi-list-ol" },
+		a: { type: "i", className: "bi bi-link" },
 	},
-	elements = [],
-	enfantables = [ 'div', 'ul', 'li', 'ol', 'a' ],
-	cl = console.log,
-	get_template = (selecteur) => {
-		return document.importNode(document.querySelector(selecteur).content, true);
+	elements = []
+
+const cl = console.log,
+	get_template = selecteur => {
+		return document.importNode(document.querySelector(selecteur).content, true)
 	},
-	render = (template, parent) => {
+	render_element = (template, parent) => {
 		let element = document.createElement(template.type)
-		
-		for (let index in template ){
-			if (index == 'type')continue
-			if (index == 'enfants'){ template.enfants.forEach( child => render( child, element) ) }
-			else element[index] = template[index]
+
+		for (let index in template) {
+			if (index == "type") continue
+			index == "enfants"
+				? template.enfants.forEach(child => render_element(child, element))
+				: (element[index] = template[index])
 		}
-		
+
 		parent.appendChild(element)
 	},
-	rerender =()=>{
+	render_vue = () => {
+		$(".vue").html("")
+		render_element(template, document.querySelector(".vue"))
 
-		$('.vue').html('')
-		render(template, document.querySelector('.vue'))
-	
-		$('.element').off('click')
-		$('.element').on('click', e=>{
+		$(".element").off("click")
+		$(".element").on("click", e => {
 			classActive = e.target.id
 
 			element = elements.find(x => x.id == classActive)
 			let form = document.querySelector("form")
 			form.innerHTML = ""
-			for (i in element) {
-				let champ = get_template('#form-element')
-				label = champ.querySelector('label')
-				input = champ.querySelector('input')
-				label.for =  label.innerHTML =  input.id = input.name = i
+
+			add_field = (i, element) => {
+				if (i == "_priority") return
+				let champ = get_template("#form-element")
+				label = champ.querySelector("label")
+				input = champ.querySelector("input")
+				label.for = label.innerHTML = input.id = input.name = i
 				input.value = i == "enfants" ? element[i].length : element[i]
 				form.prepend(champ)
 			}
-	
-			rerender()
-			
+
+			for (i in element) {
+				add_field(i, element)
+			}
+
+			add_field("priority", element)
+			render_vue()
 			e.stopPropagation()
 		})
 
-		if (classActive)
-			$('#'+classActive).addClass('active')
-
+		classActive && $("#" + classActive).addClass("active")
 	},
-	delElement = (liste, wanted) => {
-		const 
-			suppression_recursive_from_elements_list = (id) => {
-				let element_index =  elements.findIndex(x => x.id == id )
+	deleteElement = (liste, wanted_id) => {
+		const delete_family_from_elements_list = wanted_id => {
+				// si l'élémént recherché est dans la liste des elements, le supprimer avec tous ses enfants
+				let element_index = elements.findIndex(x => x.id == wanted_id)
 				if (element_index == -1) return
 				let element = elements[element_index]
 
-				if ( enfantables.includes( elements.type ) ) {
-					if ( element.enfants.length ) element.enfants.forEach( x => {
-						suppression_recursive_from_elements_list(x.id)
+				element.hasOwnProperty("enfants") &&
+					element.enfants.length &&
+					element.enfants.forEach(x => {
+						delete_family_from_elements_list(x.id)
 					})
-				}
 
-				elements.splice(element_index, 1); 
+				elements.splice(element_index, 1)
 			},
-			suppression_from_template = (liste, id) => {
+			delete_from_vue_template = (liste, wanted_id) => {
 				// si l'élément recherché fait partie de la liste, le supprimer et quitter la fonction
 				// sinon appeler la fonction sur tous les enfants des elements de la liste
-				let liste_index = liste.findIndex(x => x.id == id )
+				let liste_index = liste.findIndex(x => x.id == wanted_id)
 				if (liste_index != -1) {
-					liste.splice(liste_index, 1); 
+					liste.splice(liste_index, 1)
 					return
 				}
-				for (element of liste) {
-					if (enfantables.includes(element.type)) {
-						if (element.enfants.length) suppression_from_template(element.enfants, id)
-					}
-				}
-			}	
+				liste.forEach(element => {
+					element.hasOwnProperty("type") &&
+						element.enfants.length &&
+						delete_from_vue_template(element.enfants, wanted_id)
+				})
+			}
 
-		suppression_recursive_from_elements_list(wanted)
-		suppression_from_template(liste,wanted)
-
+		delete_family_from_elements_list(wanted_id)
+		delete_from_vue_template(liste, wanted_id)
 	},
-	get_facet = (facet) => {
-		// return 
-		// function creatrice de class
-		// pour chaque attribut de la facet créer un attribut du même nom dans l'objet et un setteur veiriant le type de la donnée
-		
-	},
-	addElement = (currentItem) => {
-		let htmlElement = document.createElement(currentItem.type)
-
-		htmlElement.className = "element"
-		htmlElement.id = currentItem.id = Date.now()
-
+	addElement = currentItem => {
 		elements.push(currentItem)
+		;(!$(".active").length && template.enfants.push(currentItem)) ||
+			(element.hasOwnProperty("enfants") &&
+				elements
+					.find(x => x.id == $(".active")[0].id)
+					.enfants.push(currentItem))
 
-		if (!$('.active').length) {
-			template.enfants.push(currentItem)
-		}else { 
-			item = elements.find(x => x.id == $('.active')[0].id)
-			if ( enfantables.includes( item.type ) ) item.enfants.push(currentItem)
-		}
-
-		$('.vue').off('click')
-		$('.vue').on('click', function( event ) {
-			$('.active').removeClass('active')
-			classActive = false
-			$('#info').html('')
-			event.stopPropagation();
+		render_vue()
+	},
+	checkTemplateElements = template => {
+		if (!Array.isArray(template)) return
+		template.forEach(element => {
+			elements.push(element)
+			element.hasOwnProperty("enfants") &&
+				element.enfants.length &&
+				checkTemplateElements(element.enfants)
 		})
-		rerender()
 	}
-
-class items {
-	constructor(element){
-		this.id
-		this.type = element.type
-		this.className = element.className
-		// this.enfants = []
-	}
-}
 
 var classActive = ""
-
-$('#update').click(e => {
-	element = elements.find(x=>x.id==$('input[name=id]').val())
-	if ($('[name="type"]').val().includes(' ')) { 
-		alert("Le type ne peut pas contenir d'espace")
-		return
-	}
-	
-	$('#info input').each(x => {
-		if ($('input')[x].name == 'enfants' || $('input')[x].name == 'id') return
-		if ($('input')[x].name == 'type') return
-		element[$('input')[x].name] = $('input')[x].value	
-	})
-	rerender()
-})
-
-$('#delete').click(e => {
-	delElement(template.enfants, $('input[name=id]').val())
-	rerender()
-	$('#info').html('')
-
-})
+document.querySelector("#preview").checked = false
 
 for (i in templates) {
+	lmt = new templates[i]()
 	let element = {
 		type: "div",
-		id: templates[i].type,
+		id: lmt.type,
 		className: "icon border centered m-1",
-		enfants: []
+		enfants: [],
 	}
 
-	svg = {... svgs[templates[i].type]}
+	svg = { ...svgs[i] }
 	element.enfants.push(svg)
 	element.enfants.push({
-		type: 'p',
-		innerHTML: templates[i].flavor
+		type: "p",
+		innerHTML: lmt.flavor,
 	})
 
-	render(element, document.querySelector('#elements'))
+	render_element(element, document.querySelector("#elements"))
 }
 
-$('.icon').click(e=>{
-	if (!e.target.classList.contains('icon'))
-		e.target = e.target.closest('.icon'); 
+$(".icon").click(e => {
+	if (!e.target.classList.contains("icon")) e.target = e.target.closest(".icon")
 
-	let currentItem = {...templates[e.target.id]}
-	if (enfantables.includes( e.target.id)) currentItem.enfants = Array(0)
+	let currentItem = new templates[e.target.id]()
 	delete currentItem.flavor
 	addElement(currentItem)
 })
 
-
-$('#preview').click(e=>{
-	if ( $('.preview').length )
-		$(".preview").removeClass('preview')
-	else $('.vue').addClass('preview')
-})
-
-document.querySelector('#preview').checked = false
-
-$('#update').click(e=>{
-	$("#modal-body .obj  textarea").val(JSON.stringify(template, null, 2))
-	document.querySelector("#modal-body .html pre").textContent = decodeURI(document.querySelector('.vue').innerHTML)
-})
-$('#import-data').click(e=>{
-	data = JSON.parse($('#data-to-import').val())
-	template.enfants = data.enfants
-		elements.length=0
-	scanTemplate(template.enfants)
-	rerender()
-	$('#close-import').click()
-})
-
-$('#empty').click(e=>{
-	template.enfants.length = 0
-	rerender()
-})
-
-function scanTemplate(template){
-	if (Array.isArray(template)){
-		for (element of template) {
-			elements.push(element)
-
-			if (enfantables.includes(element.type)){
-				if (element.enfants.length) {
-					scanTemplate(element.enfants)
-				}
-			}
-		}	
+$("#update").click(e => {
+	element = elements.find(x => x.id == $("input[name=id]").val())
+	if ($('[name="type"]').val().includes(" ")) {
+		alert("Le type ne peut pas contenir d'espace")
+		return
 	}
-}
+
+	$("#info input").each(x => {
+		if (
+			$("input")[x].name == "enfants" ||
+			$("input")[x].name == "id" ||
+			$("input")[x].name == "type"
+		)
+			return
+		element[$("input")[x].name] = $("input")[x].value
+	})
+	render_vue()
+})
+
+$("#delete").click(e => {
+	deleteElement(template.enfants, $("input[name=id]").val())
+	render_vue()
+	$("#info").html("")
+})
+
+$("#preview").click(e => {
+	;($(".preview").length && $(".preview").removeClass("preview")) ||
+		$(".vue").addClass("preview")
+})
+
+$("#update").click(e => {
+	$("#modal-body .obj  textarea").val(JSON.stringify(template, null, 2))
+	document.querySelector("#modal-body .html pre").textContent = decodeURI(
+		document.querySelector(".vue").innerHTML
+	)
+})
+
+$("#import-data").click(e => {
+	data = JSON.parse($("#data-to-import").val())
+	template.enfants = data.enfants
+	elements.length = 0
+	checkTemplateElements(template.enfants)
+	render_vue()
+	$("#close-import").click()
+})
+
+$("#empty").click(e => {
+	template.enfants.length = 0
+	render_vue()
+})
+
+$(".vue").click(e => {
+	$(".active").removeClass("active")
+	classActive = false
+	$("#info").html("")
+	e.stopPropagation()
+})
