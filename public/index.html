@@ -23,6 +23,21 @@
 	</header>
 	<main>
 		<div class="panel">
+			<div id="toggle-pannel">
+				<i class="bi m-2 bi-x-lg panel-icon" id="close-panel"></i>
+				<i class="bi m-2 bi-list panel-icon t2" id="show-panel"></i>
+			</div>
+			<br>
+			<div>
+				<div id="elements">
+					<button class="btn btn-warning px-2 py-1" id="empty">Empty</button>
+				</div>
+			</div>
+		</div>
+		<div class="vue">
+		</div>
+		<div class="info">
+			<i class="bi bi-x-lg"></i>
 			<form id="info">
 				
 			</form>
@@ -31,11 +46,6 @@
 				<button class="btn m-1 btn-success px-2 py-1" id='update'>Update</button>
 			</div>
 			<hr> 
-			<div id="elements" class="d-flex"></div>
-			<hr>
-			<button class="btn btn-warning px-2 py-1" id="empty">Empty</button>
-		</div>
-		<div class="vue">
 		</div>
 	</main>
 
@@ -100,6 +110,16 @@
 		<div class="icon border centered">
 			<h3></h3>
 			<p></p>
+		</div>
+	</template>
+
+	<template id="panel-template">
+		<div class="section">
+			<div class="bandeau border p-0 d-flex">
+				<i class="bi bi-caret-down-fill px-1"></i>
+				<p class="m-0 px-1"></p>
+			</div>
+			<div class="elements pb-1"></div>
 		</div>
 	</template>
 	<script src="./app/JS/jquery-3.6.0.js"></script>

@@ -1,34 +1,43 @@
 class items {
-	constructor(type, className, flavor) {
+	constructor(type, className, flavor, category) {
 		this.id = Date.now()
 		this.type = type
 		this.className = className
 		this.flavor = flavor
 		this.style = ""
+		this.category = category
 	}
 }
 class enfantables extends items {
-	constructor(type, className, flavor) {
-		super(type, className, flavor)
+	constructor(type, className, flavor, category) {
+		super(type, className, flavor, category)
 		this.enfants = []
 	}
 }
 class text extends items {
-	constructor(type, className, flavor) {
-		super(type, className, flavor)
+	constructor(type, className, flavor, category) {
+		super(type, className, flavor, category)
 		this.innerText = ""
 	}
 }
 
-const templates = {
+const 
+	categories = [
+		"media",
+		"formulaire",
+		"typography", 
+		"basics",
+		"layout",
+	], 
+templates = {
 		div: class extends enfantables {
 			constructor() {
-				super("div", "element", "Section")
+				super("div", "element", "Section", "layout")
 			}
 		},
 		h1: class extends text {
 			constructor() {
-				super("h1", "element", "titre")
+				super("h1", "element", "titre", "typography")
 				this.priorityMax = 5
 				this._priority = 1
 			}
@@ -52,60 +61,60 @@ const templates = {
 		},
 		p: class extends text {
 			constructor() {
-				super("p", "element", "Text")
+				super("p", "element", "Text", "typography")
 			}
 		},
 		a: class extends text {
 			constructor() {
-				super("a", "element", "Lien")
+				super("a", "element", "Lien", "basics")
 				this.href = "#"
 				this.enfants = []
 			}
 		},
 		img: class extends items {
 			constructor() {
-				super("img", "element", "Image")
+				super("img", "element", "Image", "media")
 				this.src = ""
 				this.alt = ""
 			}
 		},
 		ul: class extends enfantables {
 			constructor() {
-				super("ul", "element", "Liste-ul")
+				super("ul", "element", "Liste-ul", "basics")
 			}
 		},
 		ol: class extends enfantables {
 			constructor() {
-				super("ol", "element", "Liste-ol")
+				super("ol", "element", "Liste-ol", "basics")
 			}
 		},
 		li: class extends text {
 			constructor() {
-				super("li", "element", "Liste Item")
+				super("li", "element", "Liste Item", "basics")
 				this.enfants = []
 			}
 		},
 		form: class extends enfantables {
 			constructor() {
-				super("form", "element", "Formulaire")
+				super("form", "element", "Form", "formulaire")
 			}
 		},
 		label: class extends text {
 			constructor() {
-				super("label", "element", "Label")
+				super("label", "element", "Label", "formulaire")
 				this.for = ""
 			}
 		},
 		input: class extends items {
 			constructor() {
-				super("input", "element", "Field")
+				super("input", "element", "Field", "formulaire")
 				this.value = ""
 				this.name = ""
 			}
 		},
 		button: class extends text {
 			constructor() {
-				super("button", "element btn", "Button")
+				super("button", "element btn", "Button", "basics")
 			}
 		},
 	},
@@ -227,12 +236,21 @@ const cl = console.log,
 var classActive = ""
 document.querySelector("#preview").checked = false
 
+for (i of categories) {
+	let element = get_template("#panel-template")
+
+	element.querySelector('.section').id = i
+	element.querySelector('p').innerHTML = i
+
+	document.querySelector("#elements").prepend(element)
+}
+
 for (i in templates) {
 	lmt = new templates[i]()
 	let element = {
 		type: "div",
 		id: lmt.type,
-		className: "icon border centered m-1",
+		className: "icon border centered",
 		enfants: [],
 	}
 
@@ -243,7 +261,9 @@ for (i in templates) {
 		innerHTML: lmt.flavor,
 	})
 
-	render_element(element, document.querySelector("#elements"))
+	console.log(lmt)
+	console.log(`#elements #${lmt.category} .elements`)
+	render_element(element, document.querySelector("#elements #"+lmt.category+" .elements"))
 }
 
 $(".icon").click(e => {
@@ -310,4 +330,11 @@ $(".vue").click(e => {
 	classActive = false
 	$("#info").html("")
 	e.stopPropagation()
+})
+
+$('.panel-icon.t2').hide()
+
+$('#toggle-pannel').click(e => {
+	$('#elements').toggle()
+	$('.panel-icon').toggle()
 })
