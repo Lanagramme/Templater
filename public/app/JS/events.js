@@ -27,7 +27,7 @@ $("#update").click(e => {
 })
 
 $("#delete").click(e => {
-	deleteElement(template.enfants, $("input[name=id]").val())
+	deleteElement(Template.enfants, $("input[name=id]").val())
 	render_vue()
 	$("#info").html("")
 })
@@ -38,7 +38,7 @@ $("#preview").click(e => {
 })
 
 $("#update").click(e => {
-	$("#modal-body .obj  textarea").val(JSON.stringify(template, null, 2))
+	$("#modal-body .obj  textarea").val(JSON.stringify(Template, null, 2))
 	document.querySelector("#modal-body .html pre").textContent = decodeURI(
 		document.querySelector(".vue").innerHTML
 	)
@@ -46,7 +46,7 @@ $("#update").click(e => {
 
 $("#import-data").click(e => {
 	data = JSON.parse($("#data-to-import").val())
-	template.enfants = data.enfants
+	Template.enfants = data.enfants
 	elements.length = 0
 	checkTemplateElements(template.enfants)
 	render_vue()
@@ -54,7 +54,7 @@ $("#import-data").click(e => {
 })
 
 $("#empty").click(e => {
-	template.enfants.length = 0
+	Template.enfants.length = 0
 	render_vue()
 })
 

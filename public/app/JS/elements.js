@@ -1,11 +1,22 @@
+/** 
+ * Liste des références des elements actuellement dans le Template
+ * regénérée à chaque render
+ * l'index d'une référence est l'élément html qu'elle a servi à générer
+ */
+const elements = []
 
+function getElement(id){
+  const lmt = document.getElementById(id)
+  if (!lmt) return false
+  return elements.get(lmt)
+}
 /** 
  * Supprimer un élément du Template
  * @param {Object} liste - The parent of the element to delete 
  * @param {string} wanted_id - The element to delete
 */
 function deleteElement(liste, wanted_id) {
-    // pour supprimer un élément le supprimer de son parent dans template 
+    // pour supprimer un élément le supprimer de son parent dans Template 
     //  * récupérer le parent le plus proche avec la classe element
     //  * avec l'objet html du parent y accéder dans elements 
     //  * supprimer l'élément de la liste des enfants de son parent
@@ -45,16 +56,16 @@ function deleteElement(liste, wanted_id) {
 
 /**
  * Ajouter un enfant à un élément du template
- * @param {Object} currentItem - item auquel ajouter au template
+ * @param {Object} currentItem - item auquel ajouter au Template
  */
 function addElement( currentItem ) {
-    // ajouter un élément à template
+    // ajouter un élément à Template
     // ajouter ensuite une référence à l'élément dans le weakmap elements
     // la clé de l'élément dans elements est l'élément qu'il html crée dans le preview
     // l'élément sera supprimé d'elements quand le dom sera effacé au rerender
     // à chaque rerender ajouter l'élément rendered dans elements
 		elements.push(currentItem)
-		;(!$(".active").length && template.enfants.push(currentItem)) ||
+		;(!$(".active").length && Template.enfants.push(currentItem)) ||
 			("enfants" in element
 				&& elements
 					.find(x => x.id == $(".active")[0].id)

@@ -88,7 +88,7 @@ templates = {
 			}
 		},
 	},
-	template = { type: "div", enfants: [] },
+	Template = { type: "div", enfants: [] },
 	svgs = {
 		p: { type: "i", className: "bi bi-paragraph" },
 		h1: { type: "i", className: "bi bi-type-h1" },
@@ -98,5 +98,4 @@ templates = {
 		ul: { type: "i", className: "bi bi-list-ul" },
 		ol: { type: "i", className: "bi bi-list-ol" },
 		a: { type: "i", className: "bi bi-link" },
-	},
-	elements = []
+	}

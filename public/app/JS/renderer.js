@@ -16,7 +16,7 @@ const cl = console.log,
 	},
 	render_vue = () => {
 		$(".vue").html("")
-		render_element(template, document.querySelector(".vue"))
+		render_element(Template, document.querySelector(".vue"))
 
 		$(".element").off("click")
 		$(".element").on("click", e => {
