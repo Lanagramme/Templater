@@ -110,7 +110,7 @@ templates = {
   
   /** 
    * @Object
-   * Collection de templates, 
+   * Arborescence d'éléments
    * Elément retourné par le module à l'export
    * toutes les opérations du modules sont éffectuées sur cet object 
    */

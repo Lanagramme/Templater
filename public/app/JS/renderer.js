@@ -27,8 +27,15 @@ function render_element(template, parent){
   }
 
   parent.appendChild(element)
-  if ("id" in template)
-    Elements.list[template.id] = template
+  // console.log(template)
+  // console.log(template.id)
+  // console.log('id' in template)
+  if ("id" in template){
+    // cl('id', template.id)
+    // cl('template', template)
+    Elements.list.set(template.id,template)
+    // cl(Elements.list)
+  }
 }
 
 /**
@@ -36,7 +43,7 @@ function render_element(template, parent){
  * Ajouter un template au dom
  */
 function render_vue() {
-  Elements.list.length = 0
+  Elements.list.clear()
   $(".vue").html("")
   render_element(Template, document.querySelector(".vue"))
 
@@ -44,7 +51,7 @@ function render_vue() {
   $(".element").on("click", e => {
     classActive = e.target.id
 
-    let element = Elements.list.find(x => x.id == classActive)
+    let element = Elements.find("id",classActive)
     let form = document.querySelector("form")
     form.innerHTML = ""
 
