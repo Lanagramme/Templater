@@ -1,49 +1,73 @@
-const cl = console.log,
-	get_template = selecteur => {
-		return document.importNode(document.querySelector(selecteur).content, true)
-	},
-	render_element = (template, parent) => {
-		let element = document.createElement(template.type)
+const cl = console.log
 
-		for (let index in template) {
-			if (index == "type") continue
-			index == "enfants"
-				? template.enfants.forEach(child => render_element(child, element))
-				: (element[index] = template[index])
-		}
+/**
+ * @function
+ * Récupérer un template existant sur la page HTML index.html
+ * @param {string} selecteur - querySelecteur du template
+ * @returns HTMLElement
+ */
+function get_template(selecteur){
+  return document.importNode(document.querySelector(selecteur).content, true)
+}
 
-		parent.appendChild(element)
-	},
-	render_vue = () => {
-		$(".vue").html("")
-		render_element(Template, document.querySelector(".vue"))
+/**
+ * @function
+ * Ajoute un élément d'un template au Dom et ajoute ses enfants par récursion
+ * @param {Object} template - template json de l'élément à créer
+ * @param {HTMLElement} parent - élément html dans lequel sera happend l'élément à créer
+ */
+function render_element(template, parent){
+  let element = document.createElement(template.type)
 
-		$(".element").off("click")
-		$(".element").on("click", e => {
-			classActive = e.target.id
+  for (let index in template) {
+    if (index == "type") continue
+    index == "enfants"
+      ? template.enfants.forEach(child => render_element(child, element))
+      : (element[index] = template[index])
+  }
 
-			element = elements.find(x => x.id == classActive)
-			let form = document.querySelector("form")
-			form.innerHTML = ""
+  parent.appendChild(element)
+  if ("id" in template)
+    Elements.list[template.id] = template
+}
 
-			add_field = (i, element) => {
-				if (i == "_priority") return
-				let champ = get_template("#form-element")
-				label = champ.querySelector("label")
-				input = champ.querySelector("input")
-				label.for = label.innerHTML = input.id = input.name = i
-				input.value = i == "enfants" ? element[i].length : element[i]
-				form.prepend(champ)
-			}
+/**
+ * @function
+ * Ajouter un template au dom
+ */
+function render_vue() {
+  Elements.list.length = 0
+  $(".vue").html("")
+  render_element(Template, document.querySelector(".vue"))
 
-			for (i in element) {
-				add_field(i, element)
-			}
+  $(".element").off("click")
+  $(".element").on("click", e => {
+    classActive = e.target.id
 
-			add_field("priority", element)
-			render_vue()
-			e.stopPropagation()
-		})
+    let element = Elements.list.find(x => x.id == classActive)
+    let form = document.querySelector("form")
+    form.innerHTML = ""
 
-		classActive && $("#" + classActive).addClass("active")
-	}
+    add_field = (i, element) => {
+      if (i == "_priority") return
+      let champ = get_template("#form-element")
+      label = champ.querySelector("label")
+      input = champ.querySelector("input")
+      label.for = label.innerHTML = input.id = input.name = i
+      input.value = i == "enfants" ? element[i].length : element[i]
+      form.prepend(champ)
+    }
+
+    cl('here')
+    for (i in element) {
+      cl(i)
+      // add_field(i, element)
+    }
+
+    // add_field("priority", element)
+    render_vue()
+    e.stopPropagation()
+  })
+
+  classActive && $("#" + classActive).addClass("active")
+}

@@ -1,3 +1,8 @@
+/**
+ * @Array
+ * Liste des cétégories d'éléments à pris en charge par le module
+ * Utilisée pour la génération de l'UI
+ */
 const categories = [
   "media",
   "formulaire",
@@ -6,11 +11,16 @@ const categories = [
   "layout",
 ] 
 
+/**
+ * @String 
+ * Permettant l'identification de l'élément en cours de modification
+ */
 var classActive = ""
 
+// Necessaire, mais j'ai oublié pourquoi
 document.querySelector("#preview").checked = false
 
-// render edition pannel
+// render pannel d'edition
   for (i of categories) {
     let element = get_template("#panel-template")
 

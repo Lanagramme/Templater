@@ -1,4 +1,8 @@
 const 
+/**
+ * @Object
+ * Liste des templates des éléments HTML basiques 
+ */
 templates = {
 		div: class extends enfantables {
 			constructor() {
@@ -88,7 +92,11 @@ templates = {
 			}
 		},
 	},
-	Template = { type: "div", enfants: [] },
+  
+  /**
+   *@Object
+   Liste des templates des svgs utilisés dans l'UI
+   */
 	svgs = {
 		p: { type: "i", className: "bi bi-paragraph" },
 		h1: { type: "i", className: "bi bi-type-h1" },
@@ -98,4 +106,12 @@ templates = {
 		ul: { type: "i", className: "bi bi-list-ul" },
 		ol: { type: "i", className: "bi bi-list-ol" },
 		a: { type: "i", className: "bi bi-link" },
-	}
+	},
+  
+  /** 
+   * @Object
+   * Collection de templates, 
+   * Elément retourné par le module à l'export
+   * toutes les opérations du modules sont éffectuées sur cet object 
+   */
+	Template = { type: "div", enfants: [] }
