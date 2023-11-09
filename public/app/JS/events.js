@@ -52,10 +52,9 @@ $("#preview").click(e => {
 
 // broken, see later
 $("#import-data").click(e => {
-	data = JSON.parse($("#data-to-import").val())
-	Elements.Template.enfants = data.enfants
-	Elements.list.length = 0
-	checkTemplateElements(template.enfants)
+  let data = JSON.parse($("#data-to-import").val())
+	let template = data.enfants
+  Elements.Template.enfants = template
 	Render.vue()
 	$("#close-import").click()
 })
@@ -69,7 +68,10 @@ $("#empty").click(e => {
 	Render.vue()
 })
 
-// what the fuck is this ?
+/**
+ * Vider le pannel d'édition quand il n'y a pas de classe active
+ * supprimer la classe active si clic sur autre chose qu'un element
+ */
 $(".vue").click(e => {
 	$(".active").removeClass("active")
 	classActive = false

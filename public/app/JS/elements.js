@@ -85,7 +85,7 @@ Elements.delete = function(elementId, ParentId){
 }
 	
 /**
- * Quelque chose à voir avec l'export,
+ * Quelque chose à voir avec l'import,
  * Broken, se réfférer à "index copie.js"
  * @param {Object} template - je ne sais pas, le template à exporter je pense
  */
