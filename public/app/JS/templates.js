@@ -91,27 +91,20 @@ templates = {
 				super("button", "element btn", "Button", "basics")
 			}
 		},
-	},
+    /**
+     *@Object
+     Liste des templates des svgs utilisés dans l'UI
+     */
+    svgs: {
+      p: { type: "i", className: "bi bi-paragraph" },
+      h1: { type: "i", className: "bi bi-type-h1" },
+      div: { type: "i", className: "bi bi-bounding-box-circles" },
+      img: { type: "i", className: "bi bi-card-image" },
+      li: { type: "i", className: "bi bi-list" },
+      ul: { type: "i", className: "bi bi-list-ul" },
+      ol: { type: "i", className: "bi bi-list-ol" },
+      a: { type: "i", className: "bi bi-link" },
+    },
+	}
   
-  /**
-   *@Object
-   Liste des templates des svgs utilisés dans l'UI
-   */
-	svgs = {
-		p: { type: "i", className: "bi bi-paragraph" },
-		h1: { type: "i", className: "bi bi-type-h1" },
-		div: { type: "i", className: "bi bi-bounding-box-circles" },
-		img: { type: "i", className: "bi bi-card-image" },
-		li: { type: "i", className: "bi bi-list" },
-		ul: { type: "i", className: "bi bi-list-ul" },
-		ol: { type: "i", className: "bi bi-list-ol" },
-		a: { type: "i", className: "bi bi-link" },
-	},
   
-  /** 
-   * @Object
-   * Arborescence d'éléments
-   * Elément retourné par le module à l'export
-   * toutes les opérations du modules sont éffectuées sur cet object 
-   */
-	Template = { type: "div", enfants: [] }

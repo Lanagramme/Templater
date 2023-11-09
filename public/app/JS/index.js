@@ -16,13 +16,14 @@ const categories = [
  * Permettant l'identification de l'élément en cours de modification
  */
 var classActive = ""
+Elements.Template = { type: "div", enfants: [] }
 
 // Necessaire, mais j'ai oublié pourquoi
 document.querySelector("#preview").checked = false
 
 // render pannel d'edition
   for (i of categories) {
-    let element = get_template("#panel-template")
+    let element = Render.get_template("#panel-template")
 
     element.querySelector('.section').id = i
     element.querySelector('p').innerHTML = i
@@ -39,7 +40,7 @@ document.querySelector("#preview").checked = false
       enfants: [],
     }
 
-    svg = { ...svgs[i] }
+    svg = { ...templates.svgs[i] }
     element.enfants.push(svg)
     element.enfants.push({
       type: "p",
@@ -48,6 +49,6 @@ document.querySelector("#preview").checked = false
 
     // console.log(lmt)
     // console.log(`#elements #${lmt.category} .elements`)
-    render_element(element, document.querySelector("#elements #"+lmt.category+" .elements"))
+    Render.element(element, document.querySelector("#elements #"+lmt.category+" .elements"))
   }
 // ---

@@ -1,4 +1,5 @@
 const cl = console.log
+const Render = {}
 
 /**
  * @function
@@ -6,7 +7,7 @@ const cl = console.log
  * @param {string} selecteur - querySelecteur du template
  * @returns HTMLElement
  */
-function get_template(selecteur){
+Render.get_template = function(selecteur){
   return document.importNode(document.querySelector(selecteur).content, true)
 }
 
@@ -16,25 +17,19 @@ function get_template(selecteur){
  * @param {Object} template - template json de l'élément à créer
  * @param {HTMLElement} parent - élément html dans lequel sera happend l'élément à créer
  */
-function render_element(template, parent){
+Render.element = function (template, parent){
   let element = document.createElement(template.type)
 
   for (let index in template) {
     if (index == "type") continue
     index == "enfants"
-      ? template.enfants.forEach(child => render_element(child, element))
+      ? template.enfants.forEach(child => Render.element(child, element))
       : (element[index] = template[index])
   }
 
   parent.appendChild(element)
-  // console.log(template)
-  // console.log(template.id)
-  // console.log('id' in template)
   if ("id" in template){
-    // cl('id', template.id)
-    // cl('template', template)
     Elements.list.set(template.id,template)
-    // cl(Elements.list)
   }
 }
 
@@ -42,10 +37,10 @@ function render_element(template, parent){
  * @function
  * Ajouter un template au dom
  */
-function render_vue() {
+Render.vue = function() {
   Elements.list.clear()
   $(".vue").html("")
-  render_element(Template, document.querySelector(".vue"))
+  Render.element(Elements.Template, document.querySelector(".vue"))
 
   $(".element").off("click")
   $(".element").on("click", e => {
@@ -57,7 +52,7 @@ function render_vue() {
 
     add_field = (i, element) => {
       if (i == "_priority") return
-      let champ = get_template("#form-element")
+      let champ = Render.get_template("#form-element")
       label = champ.querySelector("label")
       input = champ.querySelector("input")
       label.for = label.innerHTML = input.id = input.name = i
@@ -72,7 +67,7 @@ function render_vue() {
     }
 
     // add_field("priority", element)
-    render_vue()
+    Render.vue()
     e.stopPropagation()
   })
 

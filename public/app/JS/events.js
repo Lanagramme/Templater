@@ -28,7 +28,7 @@ $("#update").click(e => {
 			return
 		element[$("input")[x].name] = $("input")[x].value
 	})
-	render_vue()
+	Render.vue()
 })
 
 /**
@@ -36,8 +36,8 @@ $("#update").click(e => {
  * Boutton de suppression d'un élément
  */
 $("#delete").click(e => {
-	Elements.delete(Template.enfants, $("input[name=id]").val())
-	render_vue()
+	Elements.delete(Elements.Template.enfants, $("input[name=id]").val())
+	Render.vue()
 	$("#info").html("")
 })
 
@@ -51,7 +51,7 @@ $("#preview").click(e => {
 
 // what the fuck is this ?
 $("#update").click(e => {
-	$("#modal-body .obj  textarea").val(JSON.stringify(Template, null, 2))
+	$("#modal-body .obj  textarea").val(JSON.stringify(Elements.Template, null, 2))
 	document.querySelector("#modal-body .html pre").textContent = decodeURI(
 		document.querySelector(".vue").innerHTML
 	)
@@ -60,10 +60,10 @@ $("#update").click(e => {
 // broken, see later
 $("#import-data").click(e => {
 	data = JSON.parse($("#data-to-import").val())
-	Template.enfants = data.enfants
+	Elements.Template.enfants = data.enfants
 	Elements.list.length = 0
 	checkTemplateElements(template.enfants)
-	render_vue()
+	Render.vue()
 	$("#close-import").click()
 })
 
@@ -72,8 +72,8 @@ $("#import-data").click(e => {
  * Vider le template, 
  */
 $("#empty").click(e => {
-	Template.enfants.length = 0
-	render_vue()
+	Elements.Template.enfants.length = 0
+	Render.vue()
 })
 
 // what the fuck is this ?
