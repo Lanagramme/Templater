@@ -13,7 +13,7 @@ $(".icon").click(e => {
  * Boutton de mise à jour d'un élément
  */
 $("#update").click(e => {
-	let element = Elements.list.find(x => x.id == $("input[name=id]").val())
+	let element = Elements.find(x => x.id == $("input[name=id]").val())
 	if ($('[name="type"]').val().includes(" ")) {
 		alert("Le type ne peut pas contenir d'espace")
 		return

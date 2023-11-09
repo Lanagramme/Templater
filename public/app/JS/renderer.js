@@ -47,23 +47,21 @@ Render.vue = function() {
     classActive = e.target.id
 
     let element = Elements.find("id",classActive)
-    let form = document.querySelector("form")
+    let form = document.querySelector("#info")
     form.innerHTML = ""
 
     add_field = (i, element) => {
-      if (i == "_priority") return
+      if ([ "_priority", "id", "enfants" ].includes(i)) return
       let champ = Render.get_template("#form-element")
       label = champ.querySelector("label")
       input = champ.querySelector("input")
       label.for = label.innerHTML = input.id = input.name = i
       input.value = i == "enfants" ? element[i].length : element[i]
-      form.prepend(champ)
+      form.append(champ)
     }
 
-    cl('here')
     for (i in element) {
-      cl(i)
-      // add_field(i, element)
+      add_field(i, element)
     }
 
     // add_field("priority", element)

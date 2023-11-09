@@ -26,10 +26,12 @@ Elements.list = new Map()
  * @returns (Object|false)
  */
 Elements.find = function(property, value){
+  let found = false
   Elements.list.forEach(x => {
-    if (x[property] == value) return x 
+    if (+value != NaN && x[property] == +value) {found = x ; return} 
+    if (x[property] == value) {found = x ; return}
   })
-  return false
+  return found
 }
 /** 
  * @Function
@@ -68,8 +70,6 @@ Elements.delete = function(){
  * @param {String} type - type d'élément à créer
  */
 Elements.add = function(type){
-  cl('====== ====== ======')
-  cl('add')
 	let new_element = new templates[type]()
 	delete new_element.flavor
   
