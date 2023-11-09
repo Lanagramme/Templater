@@ -13,11 +13,8 @@ $(".icon").click(e => {
  * Boutton de mise à jour d'un élément
  */
 $("#update").click(e => {
-	let element = Elements.find(x => x.id == $("input[name=id]").val())
-	if ($('[name="type"]').val().includes(" ")) {
-		alert("Le type ne peut pas contenir d'espace")
-		return
-	}
+	// let element = Elements.find(x => x.id == $("input[name=id]").val())
+  let id = $(".active")[0].id
 
 	$("#info input").each(x => {
 		if (
@@ -26,7 +23,8 @@ $("#update").click(e => {
 			$("input")[x].name == "type"
 		)
 			return
-		element[$("input")[x].name] = $("input")[x].value
+		// element[$("input")[x].name] = $("input")[x].value
+    Elements.update(id, $("input")[x].name, $("input")[x].value)
 	})
 	Render.vue()
 })

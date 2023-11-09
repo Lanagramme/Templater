@@ -51,7 +51,7 @@ Render.vue = function() {
     form.innerHTML = ""
 
     add_field = (i, element) => {
-      if ([ "_priority", "id", "enfants" ].includes(i)) return
+      if ([ "_priority", "id", "enfants", "preview" ].includes(i)) return
       let champ = Render.get_template("#form-element")
       label = champ.querySelector("label")
       input = champ.querySelector("input")

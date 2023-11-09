@@ -18,6 +18,25 @@ Elements.list = new Map()
 
 /**
  * @Function
+ * Ajouter un enfant à un élément du Template
+ * @param {String} type - type d'élément à créer
+ */
+Elements.add = function(type){
+	let new_element = new templates[type]()
+	delete new_element.flavor
+  
+  if (!$(".active").length )
+    Elements.Template.enfants.push(new_element)
+  else {
+    let Parent = Elements.list.get( +$(".active")[0].id )
+    if ("enfants" in Parent) Parent.enfants.push(new_element)
+    else alert("L'élément actif n'accepte pas d'enfants")
+  }
+  Render.vue()
+}
+
+/**
+ * @Function
  * Implementation de Array.find() pour le map Elements.list
  * renvoie le premier élément dont la valeur {propriété} à pour value {value}
  * renvoie false si aucun élément ne valide le filtre
@@ -26,12 +45,25 @@ Elements.list = new Map()
  * @returns (Object|false)
  */
 Elements.find = function(property, value){
+  if ([property, value].includes(undefined)) return false
   let found = false
   Elements.list.forEach(x => {
     if (+value != NaN && x[property] == +value) {found = x ; return} 
     if (x[property] == value) {found = x ; return}
   })
   return found
+}
+
+/**
+ * @Function 
+ * Mettre à jour une propriété d'un élément du Template
+ * @param {Number} id - id de l'élément à mettre à jour 
+ * @param {String} property - Propriété à mettre à jour
+ * @param {Any} value - Valeur à attribuer à la propriété
+ */
+Elements.update = function(id,property,value) {
+  let element = Elements.find('id', id)
+  element[property] = value
 }
 /** 
  * @Function
@@ -62,25 +94,6 @@ Elements.delete = function(){
     // cl(Parent)
   }
    Render.vue()
-}
-
-/**
- * @Function
- * Ajouter un enfant à un élément du Template
- * @param {String} type - type d'élément à créer
- */
-Elements.add = function(type){
-	let new_element = new templates[type]()
-	delete new_element.flavor
-  
-  if (!$(".active").length )
-    Elements.Template.enfants.push(new_element)
-  else {
-    let Parent = Elements.list.get( +$(".active")[0].id )
-    if ("enfants" in Parent) Parent.enfants.push(new_element)
-    else alert("L'élément actif n'accepte pas d'enfants")
-  }
-  Render.vue()
 }
 	
 /**
