@@ -34,25 +34,20 @@ $("#update").click(e => {
  * Boutton de suppression d'un élément
  */
 $("#delete").click(e => {
-	Elements.delete(Elements.Template.enfants, $("input[name=id]").val())
-	Render.vue()
+  if (!$(".active").length){
+    alert('Aucun élément sélectionné')
+    return
+  }
+  let elementId = $(".active")[0].id
+  let ParentId = document.querySelector('.active').parentNode.id
+	Elements.delete(elementId, ParentId)
 	$("#info").html("")
 })
 
-// broken, je ne sais plus à quoi sert
-// Je pense qu'il retire les bordures des éléments que j'ai ajouté pour faciliter
-// l'édition mais je ne suis pas sur
+// retire les bordures délimitant les éléments
 $("#preview").click(e => {
 	;($(".preview").length && $(".preview").removeClass("preview")) ||
 		$(".vue").addClass("preview")
-})
-
-// what the fuck is this ?
-$("#update").click(e => {
-	$("#modal-body .obj  textarea").val(JSON.stringify(Elements.Template, null, 2))
-	document.querySelector("#modal-body .html pre").textContent = decodeURI(
-		document.querySelector(".vue").innerHTML
-	)
 })
 
 // broken, see later

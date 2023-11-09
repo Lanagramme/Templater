@@ -24,6 +24,7 @@ Elements.list = new Map()
 Elements.add = function(type){
 	let new_element = new templates[type]()
 	delete new_element.flavor
+	delete new_element.category
   
   if (!$(".active").length )
     Elements.Template.enfants.push(new_element)
@@ -71,18 +72,7 @@ Elements.update = function(id,property,value) {
  * @param {Object} liste - The parent of the element to delete 
  * @param {string} wanted_id - The element to delete
 */
-Elements.delete = function(){
-  cl('====== ====== ======')
-  cl('delete')
-  if (!$(".active").length){
-    alert('Aucun élément sélectionné')
-    return
-  }
-
-  let elementId = $(".active")[0].id
-  let ParentId = document.querySelector('.active').parentNode.id
-
-
+Elements.delete = function(elementId, ParentId){
   if (!Elements.list.has(+ParentId)) {
     Elements.Template.enfants=Elements.Template.enfants.filter(x => x.id != elementId)
   }
@@ -90,8 +80,6 @@ Elements.delete = function(){
     let Parent = Elements.list.get( +ParentId )
     Parent.enfants = Parent.enfants.filter(x => x.id != elementId)
     Elements.list.set(+ParentId,Parent)
-    // Parent = Elements.list.get( ParentId )
-    // cl(Parent)
   }
    Render.vue()
 }

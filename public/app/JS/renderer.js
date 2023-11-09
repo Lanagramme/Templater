@@ -69,5 +69,10 @@ Render.vue = function() {
     e.stopPropagation()
   })
 
+	$("#modalCode textarea").val(JSON.stringify(Elements.Template, null, 2))
+	document.querySelector("#modal-body .html pre").textContent = decodeURI(
+		document.querySelector(".vue").innerHTML
+	)
+
   classActive && $("#" + classActive).addClass("active")
 }
