@@ -21,15 +21,15 @@ Elements.list = new Map()
  * Ajouter un enfant à un élément du Template
  * @param {String} type - type d'élément à créer
  */
-Elements.add = function(type){
+Elements.add = function(type, racine, ParentId){
 	let new_element = new templates[type]()
 	delete new_element.flavor
 	delete new_element.category
   
-  if (!$(".active").length )
+  if (!racine)
     Elements.Template.enfants.push(new_element)
   else {
-    let Parent = Elements.list.get( +$(".active")[0].id )
+    let Parent = Elements.list.get( +ParentId)
     if ("enfants" in Parent) Parent.enfants.push(new_element)
     else alert("L'élément actif n'accepte pas d'enfants")
   }
@@ -83,19 +83,3 @@ Elements.delete = function(elementId, ParentId){
   }
    Render.vue()
 }
-	
-/**
- * Quelque chose à voir avec l'import,
- * Broken, se réfférer à "index copie.js"
- * @param {Object} template - je ne sais pas, le template à exporter je pense
- */
-function checkTemplateElements( template ) {
-		if (!Array.isArray(template)) return
-		template.forEach(element => {
-			Elements.list.push(element)
-			"enfants" in element 
-        && element.enfants.length
-        && checkTemplateElements(element.enfants)
-		})
-	}
-

@@ -3,9 +3,9 @@ class items {
 		this.id = Date.now()
 		this.type = type
 		this.className = className
-		this.flavor = flavor
+		this.flavor = flavor // nom de l'élément dans l'UI d'ajout d'élément
 		this.style = ""
-		this.category = category
+		this.category = category // onglet auquel l'élément appartien dans l'UI d'ajout d'élément
 	}
 }
 class enfantables extends items {

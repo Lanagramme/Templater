@@ -28,9 +28,8 @@ Render.element = function (template, parent){
   }
 
   parent.appendChild(element)
-  if ("id" in template){
+  if ("id" in template)
     Elements.list.set(template.id,template)
-  }
 }
 
 /**
